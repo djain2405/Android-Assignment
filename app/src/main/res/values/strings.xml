@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">EarthQuakeApp</string>
+    <string name="action_settings">Settings</string>
+    <string name="descriptionText">This app shows you a list of earthquakes from different parts of the world with varying magnitudes. It also enables you to see the location of the earthquake on the map along with the date and time.</string>
+    <string name="ProgressbarText">Loading Data.Please Wait...</string>
+    <string name="ButtonText">Get Earthquake Information</string>
+</resources>
