@@ -1,6 +1,9 @@
 package com.divyajain.earthquakedataapp;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +14,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.divyajain.earthquakedataapp.Data.Earthquake;
 import com.divyajain.earthquakedataapp.Fragments.MainActivityFragment;
@@ -43,8 +47,15 @@ public class MainActivity extends AppCompatActivity {
         description.setText(R.string.descriptionText);
         getDataButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                initializeDialog();
-                startDownload();
+
+                if(isNetworkAvailable()) {
+                    initializeDialog();
+                    startDownload();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),R.string.InternetConnectionText,
+                            Toast.LENGTH_SHORT).show();
+                }
 
 
             }
@@ -56,6 +67,13 @@ public class MainActivity extends AppCompatActivity {
         DownloadTask downloadTask = new DownloadTask();
         downloadTask.execute(API_URL, this);
 
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     private void initializeDialog() {
